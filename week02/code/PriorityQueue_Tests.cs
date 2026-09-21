@@ -53,7 +53,8 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Dequeue from an Empty Queue
     // Expected Result: An InvalidOperationException should be thrown.
-    // Defect(s) Found: None
+    // Defect(s) Found: The for-loop condition in Dequeue() was `index < _queue.Count - 1`, skipping the last element.
+    //                  Changed to `index < _queue.Count` so the item at the back is properly evaluated.
     public void TestPriorityQueue_DequeueEmptyQueue()
     {
         var priorityQueue = new PriorityQueue();
