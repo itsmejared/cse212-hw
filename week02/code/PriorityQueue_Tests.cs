@@ -67,4 +67,23 @@ public class PriorityQueueTests
             Assert.AreEqual("The queue is empty.", e.Message, "The exception message should indicate that the queue is empty.");
         }
     }
+
+    [TestMethod]
+    // Scenario: Dequeue when the item with the highest priority is located at the back (end) of the queue.
+    // Expected Result: The item at the end ("B") should be dequeued and returned.
+    // Defect(s) Found: The loop condition in Dequeue() was `index < _queue.Count - 1`, which skipped the last element.
+    //                  Changing it to `index < _queue.Count` ensures the item at the back is evaluated.
+    public void TestPriorityQueue_DequeueHighestPriorityAtBack()
+    {
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue("Z", 3);
+        priorityQueue.Enqueue("F", 1);
+        priorityQueue.Enqueue("A", 4);
+        priorityQueue.Enqueue("Q", 2);
+        priorityQueue.Enqueue("M", 0);
+        priorityQueue.Enqueue("B", 6); // Highest priority element at the end- 
+
+        var result = priorityQueue.Dequeue();
+        Assert.AreEqual("B", result, "Priority queue did not dequeue highest priority item at the back.");
+    }
 }
