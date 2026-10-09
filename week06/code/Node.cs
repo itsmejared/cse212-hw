@@ -9,9 +9,17 @@ public class Node
         this.Data = data;
     }
 
+    /// <summary>
+    /// Problem 1: Insert unique values only.
+    /// If the value already exists in the tree, do not insert it.
+    /// </summary>
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        // If the value already exists, stop to prevent duplicates
+        if (value == Data)
+        {
+            return;
+        }
 
         if (value < Data)
         {
@@ -31,15 +39,36 @@ public class Node
         }
     }
 
+    /// <summary>
+    /// Problem 2: Search for a value in the subtree rooted at this node.
+    /// </summary>
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        // Base case: Found the value
+        if (value == Data)
+        {
+            return true;
+        }
+
+        // Search left subtree if value is smaller
+        if (value < Data)
+        {
+            return Left is not null && Left.Contains(value);
+        }
+
+        // Search right subtree if value is larger
+        return Right is not null && Right.Contains(value);
     }
 
+    /// <summary>
+    /// Problem 4: Get the height of the subtree rooted at this node.
+    /// Height is defined as 1 + max(height(left), height(right)).
+    /// </summary>
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        int leftHeight = Left is not null ? Left.GetHeight() : 0;
+        int rightHeight = Right is not null ? Right.GetHeight() : 0;
+
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
